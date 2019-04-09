@@ -1,8 +1,8 @@
 function calc =  pHCalc(Eint,Eext,E0int25,E0ext25,tempC,salt)
-% Univ gas constant, Faraday constant, 
-R = 8.3145; F = 96487; 
+% Univ gas constant, Faraday constant,
+R = 8.3145; F = 96487;
 % Temperature dependence of standard potentials, Martz et al. 2010
-dE0Int = -0.001101; dE0Ext = -0.001048;
+dE0Int = -0.00125; dE0Ext = -0.001048;
 % See Martz et al. 2010 for greater detail
 tempK = tempC+273.15; % Convert temp from C to K
 S_T = (R*tempK)/F*log(10); % Nernst temp dependence
@@ -21,5 +21,5 @@ log10gamma_HCl = 2*(-DHconst.*sqrt(Z)./(1+1.394*sqrt(Z))+(0.08885-0.000111*tempC
 pHext_free = -(((E0ext25+dE0Ext*(tempC-25))-Eext)-S_T.*(log10(mCl)+log10gamma_HCl))./S_T; % mol/kg-H2O
 pHext_free = pHext_free-log10((1000-salt.*35.165/35)/1000); % mol/kg-sw
 pHext_tot = pHext_free-log10(1+SO4_tot./K_HSO4);
- 
+
 calc = [pHint_tot pHext_tot];
